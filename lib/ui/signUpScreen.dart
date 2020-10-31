@@ -1,12 +1,38 @@
 import 'dart:ui';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatefulWidget {
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+class MultipleNotifier extends ChangeNotifier {
+  List<String> _selectedItems;
+
+  MultipleNotifier(this._selectedItems);
+
+  List<String> get selectedItems => _selectedItems;
+
+  bool isHaveItem(String value) => _selectedItems.contains(value);
+
+  addItem(String value) {
+    if (!isHaveItem(value)) {
+      _selectedItems.add(value);
+      notifyListeners();
+    }
+  }
+
+  removeItem(String value) {
+    if (isHaveItem(value)) {
+      _selectedItems.remove(value);
+      notifyListeners();
+    }
+  }
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class SignUpVolunteer extends StatefulWidget {
+  @override
+  _SignUpVolunteerState createState() => _SignUpVolunteerState();
+}
+
+class _SignUpVolunteerState extends State<SignUpVolunteer> {
   Widget _backButton() {
     return InkWell(
         onTap: () {
@@ -22,178 +48,118 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ])));
   }
 
-  Widget _buildUserNameTF() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.rtl,
-        children: [
-          // Text("كلمة المرور",style: TextStyle(fontWeight: FontWeight.bold)),
-          // SizedBox(height: 7.5),
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Color(0xFFFFCDD2).withAlpha(100),
-                        offset: Offset(2, 4),
-                        blurRadius: 8,
-                        spreadRadius: 2)
-                  ],
-                  color: Colors.white),
-              height: 60,
-              width: 375,
-              child: TextField(
-                  textDirection: TextDirection.rtl,
-                  textAlign: TextAlign.right,
-                  obscureText: true,
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      suffixIcon: Icon(Icons.account_circle,
-                          color: Colors.black38,
-                          textDirection: TextDirection.rtl),
-                      hintText: "الاسم الرباعي")))
-        ]);
+  Widget _buildWidgetTF(String nameOfWidget, IconData icon) {
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Color(0xFFFFCDD2).withAlpha(100),
+                  offset: Offset(2, 4),
+                  blurRadius: 8,
+                  spreadRadius: 2)
+            ],
+            color: Colors.white),
+        height: 60,
+        width: 375,
+        child: TextField(
+            textAlign: TextAlign.right,
+            obscureText: true,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                suffixIcon: Icon(icon, color: Colors.black38),
+                hintText: nameOfWidget)));
   }
 
-  Widget _buildEmailTF() {
-    return Column(textDirection: TextDirection.rtl, children: [
-      // Text(
-      //   "البريد الإلكتروني",
-      //   style: TextStyle(fontWeight: FontWeight.bold),
-      //   textAlign: TextAlign.right,
-      // ),
-      // SizedBox(height: 7.5),
-      Container(
-          alignment: Alignment.centerRight,
-          decoration: BoxDecoration(
+  List _myActivities;
+  String _myActivitiesResult;
+  final formKey = new GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _myActivities = [];
+    _myActivitiesResult = '';
+  }
+
+  _saveForm() {
+    var form = formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      setState(() {
+        _myActivitiesResult = _myActivities.toString();
+      });
+    }
+  }
+
+  Widget multipleChoice() {
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Color(0xFFFFCDD2).withAlpha(100),
+                  offset: Offset(2, 4),
+                  blurRadius: 8,
+                  spreadRadius: 2)
+            ],
+            color: Colors.white),
+        width: 375,
+        // child: MultiSelectFormField(
+        child: Column(
+            textDirection: TextDirection.rtl,
+            verticalDirection: VerticalDirection.down,
+            children: [
+          MultiSelectFormField(
+            autovalidate: false,
+            chipBackGroundColor: Colors.redAccent,
+            checkBoxActiveColor: Colors.redAccent,
+            dialogShapeBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Color(0xFFFFCDD2).withAlpha(100),
-                    offset: Offset(2, 4),
-                    blurRadius: 8,
-                    spreadRadius: 2)
-              ],
-              color: Colors.white),
-          height: 60,
-          width: 375,
-          child: TextFormField(
-              textAlign: TextAlign.right,
-              keyboardType: TextInputType.emailAddress,
-              style: TextStyle(color: Colors.black, fontFamily: "OpenSans"),
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  suffixIcon: Icon(Icons.email,
-                      color: Colors.black38, textDirection: TextDirection.rtl),
-                  hintText: "عنوان البريد الإلكتروني")))
-    ]);
-  }
-
-  Widget _buildPassowrdTF() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.rtl,
-        children: [
-          // Text("كلمة المرور", style: TextStyle(fontWeight: FontWeight.bold)),
-          // SizedBox(height: 7.5),
-          Container(
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Color(0xFFFFCDD2).withAlpha(100),
-                        offset: Offset(2, 4),
-                        blurRadius: 8,
-                        spreadRadius: 2)
-                  ],
-                  color: Colors.white),
-              height: 60,
-              width: 375,
-              child: TextField(
-                  textAlign: TextAlign.right,
-                  obscureText: true,
-                  style: TextStyle(color: Colors.black, fontFamily: "OpenSans"),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      suffixIcon: Icon(Icons.lock,
-                          color: Colors.black38,
-                          textDirection: TextDirection.rtl),
-                      hintText: "كلمة المرور")))
-        ]);
-  }
-
-  Widget _buildPhoneNumberTF() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.rtl,
-        children: [
-          // Text(
-          //   "رقم التواصل",
-          //   style: TextStyle(fontWeight: FontWeight.bold),
-          //   textAlign: TextAlign.right,
-          // ),
-          // SizedBox(height: 7.5),
-          Container(
-              alignment: Alignment.centerRight,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Color(0xFFFFCDD2).withAlpha(100),
-                        offset: Offset(2, 4),
-                        blurRadius: 8,
-                        spreadRadius: 2)
-                  ],
-                  color: Colors.white),
-              height: 60,
-              width: 375,
-              child: TextFormField(
-                  textAlign: TextAlign.right,
-                  keyboardType: TextInputType.phone,
-                  style: TextStyle(color: Colors.black, fontFamily: "OpenSans"),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      suffixIcon: Icon(Icons.phone,
-                          color: Colors.black38,
-                          textDirection: TextDirection.rtl),
-                      hintText: "رقم جوال")))
-        ]);
-  }
-
-  Widget _buildIDNumberTF() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.rtl,
-        children: [
-          // Text("الرقم الوطني", style: TextStyle(fontWeight: FontWeight.bold)),
-          // SizedBox(height: 7.5),
-          Container(
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Color(0xFFFFCDD2).withAlpha(100),
-                        offset: Offset(2, 4),
-                        blurRadius: 8,
-                        spreadRadius: 2)
-                  ],
-                  color: Colors.white),
-              height: 60,
-              width: 375,
-              child: TextFormField(
-                  textAlign: TextAlign.right,
-                  obscureText: true,
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      suffixIcon: Icon(Icons.person,
-                          color: Colors.black38,
-                          textDirection: TextDirection.rtl),
-                      hintText: "الرقم الوطني")))
-        ]);
+            ),
+            title: Text("ما هي فئات الأعمال التطوعية المفضلة لديك؟",
+                style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300),
+                textDirection: TextDirection.rtl),
+            dataSource: [
+              {
+                "display": "الجانب الرياضي والصحي  ",
+                "value": "الجانب الرياضي والصحي",
+              },
+              {
+                "display": "الجانب العلمي والعملي  ",
+                "value": "الجانب العلمي والعملي",
+              },
+              {
+                "display": "الجانب الوظيفي والمهاري  ",
+                "value": "الجانب الوظيفي والمهاري",
+              },
+              {
+                "display": "الجانب الإرشادي والتطوعي  ",
+                "value": "الجانب الإرشادي والتطوعي",
+              },
+              {
+                "display": "الجانب البيئي والصحي  ",
+                "value": "الجانب البيئي والصحي",
+              },
+            ],
+            textField: 'display',
+            valueField: 'value',
+            okButtonLabel: 'موافق',
+            cancelButtonLabel: 'إلغاء',
+            hintWidget: Text(''),
+            initialValue: _myActivities,
+            onSaved: (value) {
+              if (value == null) return;
+              setState(() {
+                _myActivities = value;
+              });
+            },
+          )
+        ]));
   }
 
   Widget _submitBtn() {
@@ -219,37 +185,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
         body: Container(
             alignment: AlignmentDirectional.center,
-            width: MediaQuery.of(context).size.width,
             child: Stack(children: <Widget>[
               Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/images/jordan.jpeg"),
                           fit: BoxFit.fill)),
                   child: ClipRRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaY: 7.5, sigmaX: 7.5),
+                          filter: ImageFilter.blur(sigmaY: 6.5, sigmaX: 6.5),
                           child: SingleChildScrollView(
                               child: Column(children: <Widget>[
-                                SizedBox(height: 20),
+                            SizedBox(height: 20),
                             Image.asset(
                               "assets/images/hemtak.png",
                               height: 175,
                               width: 175,
                             ),
-                            SizedBox(width: 600, height: 30),
-                            _buildUserNameTF(),
+                            SizedBox(height: 60),
+                            _buildWidgetTF("الاسم الرباعي", Icons.person),
                             SizedBox(height: 10),
-                            _buildEmailTF(),
+                            _buildWidgetTF(
+                                "الرقم الوطني", Icons.credit_card_rounded),
                             SizedBox(height: 10),
-                            _buildIDNumberTF(),
+                            _buildWidgetTF("مكان الإقامة", Icons.location_on),
                             SizedBox(height: 10),
-                            _buildPhoneNumberTF(),
+                            _buildWidgetTF(
+                                "عنوان البريد الالكتروني", Icons.email),
                             SizedBox(height: 10),
-                            _buildPassowrdTF(),
+                            _buildWidgetTF("رقم الجوال", Icons.phone),
+                            SizedBox(height: 10),
+                            _buildWidgetTF("كلمة المرور", Icons.vpn_key),
+                            SizedBox(height: 10),
+                            _buildWidgetTF("تأكيد كلمة المرور", Icons.vpn_key),
+                            SizedBox(height: 10),
+                            multipleChoice(),
                             SizedBox(height: 40),
                             _submitBtn(),
-                            SizedBox(height: 100),
+                            SizedBox(height: 20),
                           ]))))),
               Positioned(top: 30, left: 0, right: 50, child: _backButton())
             ])));

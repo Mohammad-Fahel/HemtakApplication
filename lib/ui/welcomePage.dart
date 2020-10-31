@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:hemtak_app/ui/fillFormScreen.dart';
+import 'package:hemtak_app/ui/partnerScreens.dart';
 import 'package:hemtak_app/ui/signUpScreen.dart';
-import 'package:hemtak_app/ui/loginScreen.dart';
+import 'package:hemtak_app/ui/signInScreen.dart';
 
 import 'fillFormScreen2.dart';
 
@@ -16,7 +16,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+            context, MaterialPageRoute(builder: (context) => SignInVolunteer()));
       },
       child: Container(
         width: 375,
@@ -44,7 +44,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+            context, MaterialPageRoute(builder: (context) => SignUpVolunteer()));
       },
       child: Container(
         width: 375,
@@ -55,7 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
           border: Border.all(color: Colors.white, width: 2),
         ),
         child: Text(
-          'اشترك الآن',
+          "إنشاء حساب جديد",
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
@@ -66,7 +66,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => FillFormScreen()));
+            context, MaterialPageRoute(builder: (context) => PartnerPage()));
       },
       child: Container(
         width: 375,
@@ -77,53 +77,31 @@ class _WelcomePageState extends State<WelcomePage> {
           border: Border.all(color: Colors.white, width: 2),
         ),
         child: Text(
-          "الانضمام كشريك",
+          "خيار الشركاء",
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
   }
 
-  // Widget _background() {
-  //   return Container(
-  //       constraints: BoxConstraints.expand(),
-  //       decoration: BoxDecoration(
-  //           image: DecorationImage(
-  //               image: AssetImage("assets/images/jordan.jpeg"),
-  //               fit: BoxFit.cover)),
-  //       child: ClipRRect(
-  //         child: BackdropFilter(
-  //           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-  //           child: Container(
-  //             alignment: Alignment.center,
-  //             color: Colors.grey.withOpacity(0.1),
-  //             child: Text(
-  //               "Blur Background Image in Flutter",
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-  //             ),
-  //           ),
-  //         ),
-  //       ));
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/jordan.jpeg"),
                 fit: BoxFit.fill)),
         child: ClipRRect(
             child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          filter: ImageFilter.blur(sigmaY: 6.5, sigmaX: 6.5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 500),
               Image.asset(
                 "assets/images/hemtak.png",
                 height: 253,
@@ -134,11 +112,12 @@ class _WelcomePageState extends State<WelcomePage> {
               SizedBox(height: 10),
               _signUpButton(),
               SizedBox(height: 10),
-              _fillForm()
+              _fillForm(),
+              SizedBox(height: 20),
             ],
           ),
         )),
-      ),
+
     ));
   }
 }

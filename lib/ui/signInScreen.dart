@@ -1,17 +1,17 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hemtak_app/ui/signUpScreen.dart';
+import 'package:hemtak_app/HomePage/HomePageOfVolunteer.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key, this.title}) : super(key: key);
+class SignInVolunteer extends StatefulWidget {
+  SignInVolunteer({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignInVolunteerState createState() => _SignInVolunteerState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInVolunteerState extends State<SignInVolunteer> {
   Widget _backButton() {
     return InkWell(
         onTap: () {
@@ -29,12 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildEmailTF() {
     return Column(textDirection: TextDirection.rtl, children: [
-      // Text(
-      //   "البريد الإلكتروني",
-      //   style: TextStyle(fontWeight: FontWeight.bold),
-      //   textAlign: TextAlign.right,
-      // ),
-      // SizedBox(height: 7.5),
       Container(
           alignment: Alignment.centerRight,
           decoration: BoxDecoration(
@@ -107,7 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _submitBtn() {
-    return Container(
+    return InkWell(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePageVolunteer()));
+        },
+    child: Container(
       width: 375,
       padding: EdgeInsets.symmetric(vertical: 10),
       alignment: Alignment.center,
@@ -121,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'اشترك الآن',
         style: TextStyle(fontSize: 20, color: Colors.white),
       ),
-    );
+    ));
   }
 
   Widget _divider() {
@@ -194,13 +193,15 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Stack(
         children: <Widget>[
           Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/images/jordan.jpeg"),
                       fit: BoxFit.fill)),
               child: ClipRRect(
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaY: 4, sigmaX: 4),
+                  filter: ImageFilter.blur(sigmaY: 6.5, sigmaX: 6.5),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -222,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _submitBtn(),
                         _divider(),
                         _buildSocialBtnRow(),
-                        SizedBox(height: 50),
+                        SizedBox(height: 20),
                       ],
                     ),
                   ),
