@@ -13,6 +13,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: "Flutter Demo",
+        localizationsDelegates:[
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale("ar", "AE"), // OR Locale('ar', 'AE') OR Other RTL locales
+        ],
         debugShowCheckedModeBanner: false,
         home: MyHomePage());
   }

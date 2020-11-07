@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hemtak_app/ui/welcomePage.dart';
+import 'package:ndialog/ndialog.dart';
 
 // This page appears ones user click on "خيار الشركاء" button
 class PartnerPage extends StatefulWidget {
@@ -65,17 +67,10 @@ class _PartnerPageState extends State<PartnerPage> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Color(0xFFFFCDD2).withAlpha(100),
-                  offset: Offset(2, 4),
-                  blurRadius: 8,
-                  spreadRadius: 2)
-            ],
-            color: Colors.white),
+            border: Border.all(color: Colors.white, width: 2)),
         child: Text(
           "إنشاء حساب شريك",
-          style: TextStyle(fontSize: 20, color: Color(0xFFE53935)),
+          style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
@@ -140,6 +135,7 @@ class _SignInPartnerState extends State<SignInPartner> {
   Widget _buildEmailTF() {
     return Column(textDirection: TextDirection.rtl, children: [
       Container(
+          padding: EdgeInsetsDirectional.only(start: 10),
           alignment: Alignment.centerRight,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -158,9 +154,8 @@ class _SignInPartnerState extends State<SignInPartner> {
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
+                  icon: Icon(Icons.email, color: Colors.black38),
                   border: InputBorder.none,
-                  suffixIcon: Icon(Icons.email,
-                      color: Colors.black38, textDirection: TextDirection.rtl),
                   hintText: "عنوان البريد الإلكتروني")))
     ]);
   }
@@ -173,6 +168,7 @@ class _SignInPartnerState extends State<SignInPartner> {
           // Text("كلمة المرور", style: TextStyle(fontWeight: FontWeight.bold)),
           // SizedBox(height: 7.5),
           Container(
+              padding: EdgeInsetsDirectional.only(start: 10),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -191,10 +187,8 @@ class _SignInPartnerState extends State<SignInPartner> {
                   obscureText: true,
                   style: TextStyle(color: Colors.black, fontFamily: "OpenSans"),
                   decoration: InputDecoration(
+                      icon: Icon(Icons.lock, color: Colors.black38),
                       border: InputBorder.none,
-                      suffixIcon: Icon(Icons.lock,
-                          color: Colors.black38,
-                          textDirection: TextDirection.rtl),
                       hintText: "كلمة المرور")))
         ]);
   }
@@ -223,7 +217,7 @@ class _SignInPartnerState extends State<SignInPartner> {
               end: Alignment.centerRight,
               colors: [Color(0xfff44336), Color(0xffe57373)])),
       child: Text(
-        'اشترك الآن',
+        'تسجيل الدخول كشريك',
         style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
@@ -368,6 +362,7 @@ class _SignUpPartnerState extends State<SignUpPartner> {
 
   Widget _buildWidgetTF(String nameOfWidget, IconData icon) {
     return Container(
+      padding: EdgeInsetsDirectional.only(start: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[
@@ -385,8 +380,8 @@ class _SignUpPartnerState extends State<SignUpPartner> {
             obscureText: true,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
+              icon: Icon(icon, color: Colors.black38),
                 border: InputBorder.none,
-                suffixIcon: Icon(icon, color: Colors.black38),
                 hintText: nameOfWidget)));
   }
 
@@ -430,6 +425,7 @@ class _SignUpPartnerState extends State<SignUpPartner> {
       itemsCity.add(new DropdownMenuItem(value: city, child: new Text(city)));
     return itemsCity;
   }
+
   List<DropdownMenuItem<String>> getDropDownMenuItemsPartner() {
     List<DropdownMenuItem<String>> itemsPartner = new List();
     for (String partner in _partnership)
@@ -443,6 +439,7 @@ class _SignUpPartnerState extends State<SignUpPartner> {
       _currentCity = selected;
     });
   }
+
   void changedDropDownItemPartner(String selected) {
     setState(() {
       _currentPartner = selected;
@@ -453,6 +450,7 @@ class _SignUpPartnerState extends State<SignUpPartner> {
       String nameOfWidget, IconData icon, int count) {
     counter = count;
     return Container(
+      padding: EdgeInsetsDirectional.only(start: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[
@@ -469,12 +467,11 @@ class _SignUpPartnerState extends State<SignUpPartner> {
           crossAxisAlignment: CrossAxisAlignment.center,
           textDirection: TextDirection.rtl,
           children: <Widget>[
-            SizedBox(width: 10),
             Icon(icon, color: Colors.grey),
-            SizedBox(width: 10),
+            SizedBox(width: 15),
             Text(nameOfWidget,
                 style: TextStyle(color: Colors.grey[700], fontSize: 15)),
-            SizedBox(width: 100),
+            SizedBox(width: 115),
             Center(
               child: DropdownButton(
                 itemHeight: 70,
@@ -492,6 +489,7 @@ class _SignUpPartnerState extends State<SignUpPartner> {
       String nameOfWidget, IconData icon, int count) {
     counter = count;
     return Container(
+      padding: EdgeInsetsDirectional.only(start: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[
@@ -508,12 +506,11 @@ class _SignUpPartnerState extends State<SignUpPartner> {
             crossAxisAlignment: CrossAxisAlignment.center,
             textDirection: TextDirection.rtl,
             children: <Widget>[
-              SizedBox(width: 10),
               Icon(icon, color: Colors.grey),
-              SizedBox(width: 10),
+              SizedBox(width: 15),
               Text(nameOfWidget,
                   style: TextStyle(color: Colors.grey[700], fontSize: 15)),
-              SizedBox(width: 140),
+              SizedBox(width: 150),
               Center(
                 child: DropdownButton(
                   style: TextStyle(color: Colors.redAccent),
@@ -526,20 +523,47 @@ class _SignUpPartnerState extends State<SignUpPartner> {
   }
 
   Widget _submitBtn() {
-    return Container(
-      width: 375,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xfff44336), Color(0xffe57373)])),
-      child: Text(
-        'اشترك الآن',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+    return FlatButton(
+      child: Container(
+        width: 375,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0xfff44336), Color(0xffe57373)])),
+        child: Text(
+          'اشترك الآن',
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
       ),
+      onPressed: () {
+        NAlertDialog(
+          title: Text(
+            "تم إنشاء حسابك بنجاح",
+            textAlign: TextAlign.right,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Text("هل تود تسجيل الدخول؟",
+              textAlign: TextAlign.right,
+              style: TextStyle(fontWeight: FontWeight.w300)),
+          actions: [
+            FlatButton(
+              onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignInPartner())),
+              child: Text("موافق", style: TextStyle(color: Colors.redAccent)),
+            ),
+            FlatButton(
+                onPressed: () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => WelcomePage())),
+                child:
+                    Text("إلغاء", style: TextStyle(color: Colors.redAccent))),
+          ],
+          blur: 2,
+        ).show(context);
+      },
     );
   }
 

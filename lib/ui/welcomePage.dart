@@ -15,8 +15,8 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _loginButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignInVolunteer()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SignInVolunteer()));
       },
       child: Container(
         width: 375,
@@ -43,8 +43,8 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _signUpButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpVolunteer()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SignUpVolunteer()));
       },
       child: Container(
         width: 375,
@@ -84,40 +84,34 @@ class _WelcomePageState extends State<WelcomePage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/jordan.jpeg"),
-                fit: BoxFit.fill)),
-        child: ClipRRect(
-            child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaY: 6.5, sigmaX: 6.5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/hemtak.png",
-                height: 253,
-                width: 235
-              ),
-              SizedBox(height: 75),
-              _loginButton(),
-              SizedBox(height: 10),
-              _signUpButton(),
-              SizedBox(height: 10),
-              _fillForm(),
-              SizedBox(height: 20),
-            ],
-          ),
-        )),
-
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/jordan.jpeg"),
+              fit: BoxFit.fill)),
+      child: ClipRRect(
+          child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaY: 6.5, sigmaX: 6.5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/images/hemtak.png", height: 253, width: 235),
+            SizedBox(height: 75),
+            _loginButton(),
+            SizedBox(height: 10),
+            _signUpButton(),
+            SizedBox(height: 10),
+            _fillForm(),
+            SizedBox(height: 20),
+          ],
+        ),
+      )),
     ));
   }
 }

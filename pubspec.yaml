@@ -34,7 +34,7 @@ dependencies:
   path_provider: ^1.6.21
   chips_choice: ^2.0.1
   multiselect_formfield: ^0.1.4
-
+  ndialog: ^3.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,6 +54,7 @@ flutter:
     - assets/images/hemtak.png
     - assets/images/loader.gif
     - assets/images/background.png
+    - assets/images/volunteer5.5.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

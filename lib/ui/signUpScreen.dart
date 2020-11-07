@@ -1,7 +1,12 @@
 import 'dart:ui';
+import 'package:hemtak_app/ui/signInScreen.dart';
+import 'package:hemtak_app/ui/welcomePage.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 
 class MultipleNotifier extends ChangeNotifier {
   List<String> _selectedItems;
@@ -34,22 +39,24 @@ class SignUpVolunteer extends StatefulWidget {
 
 class _SignUpVolunteerState extends State<SignUpVolunteer> {
   Widget _backButton() {
-    return InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(children: <Widget>[
-              Container(
-                  padding: EdgeInsets.only(right: 20, top: 5, bottom: 10),
-                  child: Icon(Icons.keyboard_arrow_left,
-                      color: Colors.redAccent, size: 45))
-            ])));
-  }
+  return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(children: <Widget>[
+            Container(
+                padding: EdgeInsets.only(right: 20, top: 5, bottom: 10),
+                child: Icon(Icons.keyboard_arrow_left,
+                    color: Colors.redAccent, size: 45))
+          ])));
+}
 
   Widget _buildWidgetTF(String nameOfWidget, IconData icon) {
     return Container(
+      padding: EdgeInsetsDirectional.only(start: 10),
+      alignment: AlignmentDirectional.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[
@@ -63,12 +70,11 @@ class _SignUpVolunteerState extends State<SignUpVolunteer> {
         height: 60,
         width: 375,
         child: TextField(
-            textAlign: TextAlign.right,
+          textAlign: TextAlign.right,
             obscureText: true,
-            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
+              icon: Icon(icon, color: Colors.black38),
                 border: InputBorder.none,
-                suffixIcon: Icon(icon, color: Colors.black38),
                 hintText: nameOfWidget)));
   }
 
@@ -111,72 +117,100 @@ class _SignUpVolunteerState extends State<SignUpVolunteer> {
             textDirection: TextDirection.rtl,
             verticalDirection: VerticalDirection.down,
             children: [
-          MultiSelectFormField(
-            autovalidate: false,
-            chipBackGroundColor: Colors.redAccent,
-            checkBoxActiveColor: Colors.redAccent,
-            dialogShapeBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-            ),
-            title: Text("ما هي فئات الأعمال التطوعية المفضلة لديك؟",
-                style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 17,
-                    fontWeight: FontWeight.w300),
-                textDirection: TextDirection.rtl),
-            dataSource: [
-              {
-                "display": "الجانب الرياضي والصحي  ",
-                "value": "الجانب الرياضي والصحي",
-              },
-              {
-                "display": "الجانب العلمي والعملي  ",
-                "value": "الجانب العلمي والعملي",
-              },
-              {
-                "display": "الجانب الوظيفي والمهاري  ",
-                "value": "الجانب الوظيفي والمهاري",
-              },
-              {
-                "display": "الجانب الإرشادي والتطوعي  ",
-                "value": "الجانب الإرشادي والتطوعي",
-              },
-              {
-                "display": "الجانب البيئي والصحي  ",
-                "value": "الجانب البيئي والصحي",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
-            okButtonLabel: 'موافق',
-            cancelButtonLabel: 'إلغاء',
-            hintWidget: Text(''),
-            initialValue: _myActivities,
-            onSaved: (value) {
-              if (value == null) return;
-              setState(() {
-                _myActivities = value;
-              });
-            },
-          )
-        ]));
+              MultiSelectFormField(
+                autovalidate: false,
+                chipBackGroundColor: Colors.red[100],
+                checkBoxActiveColor: Colors.redAccent,
+                dialogShapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                title: Text("ما هي فئات الأعمال التطوعية المفضلة لديك؟",
+                    style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 17,
+                        fontWeight: FontWeight.w300),
+                    textDirection: TextDirection.rtl),
+                dataSource: [
+                  {
+                    "display": "الجانب الرياضي والصحي  ",
+                    "value": "الجانب الرياضي والصحي",
+                  },
+                  {
+                    "display": "الجانب العلمي والعملي  ",
+                    "value": "الجانب العلمي والعملي",
+                  },
+                  {
+                    "display": "الجانب الوظيفي والمهاري  ",
+                    "value": "الجانب الوظيفي والمهاري",
+                  },
+                  {
+                    "display": "الجانب الإرشادي والتطوعي  ",
+                    "value": "الجانب الإرشادي والتطوعي",
+                  },
+                  {
+                    "display": "الجانب البيئي والصحي  ",
+                    "value": "الجانب البيئي والصحي",
+                  },
+                ],
+                required: true,
+                textField: 'display',
+                valueField: 'value',
+                okButtonLabel: 'موافق',
+                cancelButtonLabel: 'إلغاء',
+                hintWidget: Text(''),
+                initialValue: _myActivities,
+                onSaved: (value) {
+                  if (value == null) return;
+                  setState(() {
+                    _myActivities = value;
+                  });
+                },
+              )
+            ]));
   }
 
   Widget _submitBtn() {
-    return Container(
-      width: 375,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xfff44336), Color(0xffe57373)])),
-      child: Text(
-        'اشترك الآن',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+    return FlatButton(
+      child: Container(
+        width: 375,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0xfff44336), Color(0xffe57373)])),
+        child: Text(
+          'اشترك الآن',
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
       ),
+      onPressed: () {
+        NAlertDialog(
+          title: Text(
+            "تم إنشاء حسابك بنجاح",
+            textAlign: TextAlign.right,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Text("هل تود تسجيل الدخول؟",
+              textAlign: TextAlign.right,
+              style: TextStyle(fontWeight: FontWeight.w300)),
+          actions: [
+            FlatButton(
+              onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignInVolunteer())),
+              child: Text("موافق", style: TextStyle(color: Colors.redAccent)),
+            ),
+            FlatButton(
+                onPressed: () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => WelcomePage())),
+                child: Text("إلغاء", style: TextStyle(color: Colors.redAccent))),
+
+          ],
+          blur: 2,
+        ).show(context);
+      },
     );
   }
 
@@ -226,7 +260,7 @@ class _SignUpVolunteerState extends State<SignUpVolunteer> {
                             _submitBtn(),
                             SizedBox(height: 20),
                           ]))))),
-              Positioned(top: 30, left: 0, right: 50, child: _backButton())
+              Positioned(top: 40, left: 0, child: _backButton()),
             ])));
   }
 }
